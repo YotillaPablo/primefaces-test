@@ -11,14 +11,15 @@ public class TestObject implements Serializable {
 
     private String id;
     private String name;
-    private String artist;
-    private Integer released;
 
-    public TestObject(String name, String artist, Integer released) {
+    public TestObject(String name) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
-        this.artist = artist;
-        this.released = released;
+    }
+
+    public void toUpperCase(){
+        this.name = this.name.toUpperCase();
+        System.out.println("updating " + name);
     }
 
 }

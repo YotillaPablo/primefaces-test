@@ -12,11 +12,32 @@
         <h:outputScript name="test.js" />
         <h:outputStylesheet name="test.css" />
     </h:head>
-    <h:body>
+    <h:body styleClass="h-full">
 
-        <h1>#{testView.string}</h1>
-        <h:form id="frmTest">
-            
+        <h:form id="frmTest" style="height: 100vh">
+            <h:panelGroup layout="block">
+                <p:dataTable
+                        rowKey="#{row.id}"
+                        scrollRows="20"
+                        scrollHeight="100%"
+                        id="myTable"
+                        value="#{testView}"
+                        rows="40"
+                        var="row"
+                        scrollable="true"
+                        resizeMode="expand"
+                        resizableColumns="true"
+                        virtualScroll="true">
+
+                    <p:column id="name" headerText="name">
+                        #{row.name}
+                        <p:commandButton id="toUpperCaseButton"
+                                         value="toUpperCase"
+                                         action="#{row.toUpperCase()}"
+                                         update="myTable"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
         </h:form>
 
     </h:body>

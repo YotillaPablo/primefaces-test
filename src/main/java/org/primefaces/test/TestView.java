@@ -6,32 +6,28 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import lombok.Data;
+import org.primefaces.model.*;
 
 @Data
 @Named
 @ViewScoped
-public class TestView implements Serializable {
-    
-    private String string;
-    private Integer integer;
-    private BigDecimal decimal;
-    private LocalDateTime localDateTime;
-    private List<TestObject> list;
-    
-    @PostConstruct  
-    public void init() {
-        string = "Welcome to PrimeFaces!!!";
-        list = new ArrayList<>(Arrays.asList(
-                new TestObject("Thriller", "Michael Jackson", 1982),
-                new TestObject("Back in Black", "AC/DC", 1980),
-                new TestObject("The Bodyguard", "Whitney Houston", 1992),
-                new TestObject("The Dark Side of the Moon", "Pink Floyd", 1973)
-        ));
+public class TestView extends LazyDataModel<TestObject> implements Serializable {
+
+    @Override
+    public int count(Map<String, FilterMeta> filterBy) {
+        return TestService.count();
     }
 
+    @Override
+    public List<TestObject> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+        return TestService.get(first, pageSize);
+    }
 }
